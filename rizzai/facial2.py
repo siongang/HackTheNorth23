@@ -20,13 +20,16 @@ camera = cv2.VideoCapture(0)
 emotion_list = {}
 quit_flag = False
 
-def gen_frames():  
+def gen_frames() -> None:
+    """
+    Run the camera. Make predictions using the DeepFace model.
+    """ 
     while True:
         success, frame = camera.read()  # read the camera frame
         if not success or quit_flag:
             break
 
-        # apply model to frame
+        # greyscale for efficiency
         gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
         # Detect faces in the frame
@@ -67,27 +70,29 @@ def gen_frames():
 
 
 @app.route('/')
-def index():
+def index() -> str:
     return render_template('index.html')
 
 # streaming
 @app.route('/video_feed')
-def video_feed():
+def video_feed() -> Response:
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
+# video_player page
+@app.route('/video_player.html')
+def video_player():
+    return render_template('video_player.html')
+
 @app.route('/')
-def quit_facial():
+def quit_facial() -> str:
     global quit_flag  # have to make global so it changes outside of function
     quit_flag = True
     return "Video terminated."
 
-@app.route('/')
-def live_stream():
-    live_url = 'http://localhost:5000/live_video'
-    return render_template('video_player.html', url=live_url)
-
-
-def get_emotion_list():
+def get_emotion_list() -> dict:
+    """
+    Returns current emotion_list 
+    """
     return emotion_list
 
 if __name__ == "__main__":
