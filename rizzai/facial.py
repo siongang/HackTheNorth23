@@ -1,7 +1,17 @@
 # Real-time Facial Emotion Recognition using OpenCV and Deepface
-
+import os
 import cv2
 from deepface import DeepFace
+from flask import Flask, render_template, Response, url_for
+from time import sleep
+app = Flask(__name__)
+
+
+@app.route('/')
+def index():
+    return render_template("test.html")
+    # facial()
+
 
 # Load the pre-trained emotion detection model
 model = DeepFace.build_model("Emotion")
@@ -18,52 +28,73 @@ def facial():
 
     emotion_list = {}
 
-    while True:
-        # Capture frame-by-frame
-        ret, frame = cap.read()
 
-        # Convert frame to grayscale
-        gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    # Capture frame-by-frame
+    ret, frame = cap.read()
 
-        # Detect faces in the frame
-        faces = face_cascade.detectMultiScale(gray_frame, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
+    # Convert frame to grayscale
+    gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-        for (x, y, w, h) in faces:
-            # Extract the face ROI (Region of Interest)
-            face_roi = gray_frame[y:y + h, x:x + w]
+    # Detect faces in the frame
+    faces = face_cascade.detectMultiScale(gray_frame, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
 
-            # Resize the face ROI to match the input shape of the model
-            resized_face = cv2.resize(face_roi, (48, 48), interpolation=cv2.INTER_AREA)
+    for (x, y, w, h) in faces:
+        # Extract the face ROI (Region of Interest)
+        face_roi = gray_frame[y:y + h, x:x + w]
 
-            # Normalize the resized face image
-            normalized_face = resized_face / 255.0
+        # Resize the face ROI to match the input shape of the model
+        resized_face = cv2.resize(face_roi, (48, 48), interpolation=cv2.INTER_AREA)
 
-            # Reshape the image to match the input shape of the model
-            reshaped_face = normalized_face.reshape(1, 48, 48, 1)
+        # Normalize the resized face image
+        normalized_face = resized_face / 255.0
 
-            # Predict emotions using the pre-trained model
-            preds = model.predict(reshaped_face)[0]
-            emotion_idx = preds.argmax()
-            emotion = emotion_labels[emotion_idx]
-            
-            if not emotion in emotion_list:
-                emotion_list[emotion] = 1
-            else:
-                emotion_list[emotion] += 1
+        # Reshape the image to match the input shape of the model
+        reshaped_face = normalized_face.reshape(1, 48, 48, 1)
+
+        # Predict emotions using the pre-trained model
+        preds = model.predict(reshaped_face)[0]
+        emotion_idx = preds.argmax()
+        emotion = emotion_labels[emotion_idx]
         
-            # Draw rectangle around face and label with predicted emotion
-            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
-            cv2.putText(frame, emotion, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
+        if not emotion in emotion_list:
+            emotion_list[emotion] = 1
+        else:
+            emotion_list[emotion] += 1
+    
+        # Draw rectangle around face and label with predicted emotion
+        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
+        cv2.putText(frame, emotion, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
 
-        # Display the resulting frame
-        cv2.imshow('Real-time Emotion Detection', frame)
+    # Display the resulting frame
+    #cv2.imshow('Real-time Emotion Detection', frame)
 
-        # Press 'q' to exit
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
+    cv2.imwrite('t.jpg', frame)
 
-    # Release the capture and close all windows
-    cap.release()
-    cv2.destroyAllWindows()
+    # transports jpg to html
+    picFolder = os.path.join('static', 'images')
+    app.config['UPLOAD_FOLDER'] = picFolder
+    imageList = os.listdir('static/images')
+    imagelist = ['images/' + image for image in imageList]
+    print(imagelist)
+  
+    cv2.imshow('1', frame)
 
-    return emotion_list
+        # # Press 'q' to exit
+        # if cv2.waitKey(1) & 0xFF == ord('q'):
+        #     break
+
+    # # Release the capture and close all windows
+    # cap.release()
+    # cv2.destroyAllWindows()
+
+    return render_template("test.html", imagelist=imagelist[0])
+
+
+
+@app.route('/video_feed')
+def video_feed():
+    return Response(facial(), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+if __name__ == '__main__':
+    app.run()
+    #  facial()

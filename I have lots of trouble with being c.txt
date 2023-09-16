@@ -1,18 +1,3 @@
-import os
-import openai
-import json
-
-
-# Access the API key from the environment variable
-# openai_key = os.getenv("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")
-
-openai.api_key = "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"
-
-# list models
-models = openai.Model.list()
-print(models)
-
-init_question = '''
 I have lots of trouble with being confident around girls.
 I need assistance with being charismatic and attractive personality wise!
 So to practice, you will play a role as a timid women named Sally that I am trying to 
@@ -80,34 +65,11 @@ Correct version:
 
 the correct version has a , and " that seperates well and What. Be smart please. 
 
+
 Remember, ["asdfasdf", "asdfasdfa", "asdfasd"] you are creating a python string LIST so there must be quotation marks and commas between each index!
+
 
 2) Most importantly, you seem to forget that this is kind of like a play between Sally and me. You cannot speak for me, the user. I am talking to you (sally) and you (sally) are talking to me. You in no way can talk as me, so do not compute my answers. So, after you state the setting and give me way to initiate the convo, wait for my input and dont speak for me!
 
-Lets start, tell me the setting and tell me to start the convo!
-'''
+Lets start!
 
-
-
-
-history = [{"role": "system", "content": init_question}]
-def rizz ():
-    global translatedValue
-    # create a chat completion
-    chat_completion = openai.ChatCompletion.create(model="gpt-4-0613", messages=history)
-    
-    history.append({"role": "assistant", "content": chat_completion.choices[0].message.content})
-    return chat_completion.choices[0].message.content
-
-
-while (True):
-    print(rizz())
-    print("for loop")
-    response = input("enter response")
-    if (response) == "break": 
-        break
-    history.append({"role": "user", "content": response})
-  
-
-
- 
