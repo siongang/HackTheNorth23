@@ -128,7 +128,7 @@ def rizz ():
     return assistant_reply
 
 
-final_strengths = ''
+final_summary = ''
 final_weaknesses = ''
 final_predictions = ''
 highest_emotion = ''
@@ -137,7 +137,7 @@ all_emotions = ''
 
 
 def analysis ():
-    global final_strengths
+    global final_summary
     global final_weaknesses
     global final_predictions
     global highest_emotion
@@ -169,27 +169,19 @@ def analysis ():
     chat_completion = openai.ChatCompletion.create(model="gpt-4-0613", messages=history)
 
     analysis_question = f'''
-    Considering the previous interations that we had, state one point that I did well on in terms of
-    charisma and attractivness (less than 70 words):'''
+    Look back at the feedback you gave me throughout our interaction, and summarize it. How can i be more charismatic, and
+     fix my unique flaws? (less than 100 words):'''
     history.append({"role": "assistant", "content": analysis_question})
     chat_completion = openai.ChatCompletion.create(model="gpt-4-0613", messages=history)
-    final_strengths = chat_completion.choices[0].message.content
+    final_summary = chat_completion.choices[0].message.content
 
 
-
-
-
-    analysis_question1 = f'''
-    Considering the short previous interactions that we had, state one weakness in terms of charisma and attractivness (less than 70 words):'''
-    history.append({"role": "assistant", "content": analysis_question1})
-    chat_completion = openai.ChatCompletion.create(model="gpt-4-0613", messages=history)
-    final_weaknesses = chat_completion.choices[0].message.content
 
     analysis_question2 = f'''
-    In a sentence, would you like to go on a second date with me or no? (less than 25 words)'''
+    In a sentence, do I deserve a second date? or did i prove to be awkward and still need to work harder. be strict'''
     history.append({"role": "assistant", "content": analysis_question2})
-    chat_completion = openai.ChatCompletion.create(model="gpt-4-0613", messages=history)
-    final_predictions = chat_completion.choices[0].message.content
+    chat_completion2 = openai.ChatCompletion.create(model="gpt-4-0613", messages=history)
+    final_predictions = chat_completion2.choices[0].message.content
 
 
 
