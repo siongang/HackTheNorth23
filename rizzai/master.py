@@ -30,8 +30,9 @@ def record_to_text():
     return speech.speech_to_text("HackTheNorth23/rizzai/output_audio.wav")
     
 
+get_mic_input()
+print(record_to_text)
 
-
-# speech.speech_to_text("HackTheNorth23/rizzai/output_audio.wav")q
+# speech.speech_to_text("HaqckTheNorth23/rizzai/output_audio.wav")q
 
 # print(facial_emotions)

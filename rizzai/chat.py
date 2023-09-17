@@ -6,7 +6,7 @@ import master
 # Access the API key from the environment variable
 # openai_key = os.getenv("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")
 
-openai.api_key = "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"
+openai.api_key = "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"
 
 # list models
 models = openai.Model.list()
@@ -95,9 +95,6 @@ After stating those, tell me if you would go on a second date with the user, BE 
 '''
 
 
-
-
-
 history = [{"role": "system", "content": init_question}]
 
 def rizz ():
@@ -120,6 +117,9 @@ def analysis ():
 
 while (True):
     print(rizz())
+    print("RIEZZ")
+
+
     master.get_mic_input()
     response = master.record_to_text() 
     print (response)
