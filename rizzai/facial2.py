@@ -30,7 +30,7 @@ def gen_frames() -> None:
         if not success or quit_flag:
             break
 
-        # greyscale for efficiency
+        # apply model to frame
         gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
         # Detect faces in the frame
@@ -63,7 +63,7 @@ def gen_frames() -> None:
             cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
             cv2.putText(frame, emotion, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
 
-
+     
         ret, buffer = cv2.imencode('.jpg', frame)
         frame = buffer.tobytes()
         yield (b'--frame\r\n'
@@ -108,4 +108,3 @@ def get_emotion_list() -> dict:
 
 if __name__ == "__main__":
     app.run()
-    print(get_emotion_list())
