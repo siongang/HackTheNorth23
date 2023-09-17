@@ -22,4 +22,4 @@ def speech_to_text(audio_file_path):
         
     return recognized_text
 
-print(speech_to_text("rizzai/output_audio.wav"))
+# print(speech_to_text("rizzai/output_audio.wav"))

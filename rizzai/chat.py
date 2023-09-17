@@ -1,16 +1,22 @@
 import os
 import openai
 import json
-import master
+from dotenv import load_dotenv
 
+# Load environment variables from the .env file
+load_dotenv()
+
+api_key = os.getenv("API_KEY")
+
+print("IM ALIVE")
 # Access the API key from the environment variable
-# openai_key = os.getenv("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")
 
-openai.api_key = "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"
+
+openai.api_key = api_key
 
 # list models
 models = openai.Model.list()
-print(models)
+
 
 init_question = '''
 I have lots of trouble with being confident around girls.
@@ -108,11 +114,12 @@ def rizz ():
 
 def analysis ():
     emotion = "sad"
-    
     history.append({"role": "assistant", "content": analysis_question})
     chat_completion = openai.ChatCompletion.create(model="gpt-4-0613", messages=history)
     return chat_completion.choices[0].message.content
 
+print("at the master")
+import master
 
 
 while (True):
