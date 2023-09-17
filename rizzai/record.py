@@ -9,7 +9,7 @@ def record():
     RATE = 44100  # Sample rate (samples per second)
     CHUNK = 1024  # Number of frames per buffer
     RECORD_SECONDS = 5  # Duration of the recording in seconds
-    OUTPUT_FILENAME = "HackTheNorth23/rizzai/output_audio.wav"
+    OUTPUT_FILENAME = "rizzai/output_audio.wav"
 
     # Initialize PyAudio
     audio = pyaudio.PyAudio()

@@ -1,23 +1,37 @@
 import record
 import speech
-import facial
+import facial2
 import concurrent.futures
 
 
 facial_emotions = []
-# Create a ThreadPoolExecutor with a specified number of worker threads
-with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
+# def user_answer():
+#     # Create a ThreadPoolExecutor with a specified number of worker threads
+#     with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
 
-    record_ex = executor.submit(record.record)
-    facial_ex = executor.submit(facial.facial)
+#         record_ex = executor.submit(record.record)
+#         facial_ex = executor.submit(facial2.gen_frames)
 
-    # Wait for all functions to complete
-    concurrent.futures.wait([record_ex, facial_ex])   
-    # Optionally, you can retrieve the results of the functions
+#         concurrent.futures.wait([facial_ex, record_ex])   
+
+
+# user_answer()
+
+
+
+def get_mic_input():
+    record.record()
+
+
+
+
+# recorded speech to text
+def record_to_text():
+    return speech.speech_to_text("HackTheNorth23/rizzai/output_audio.wav")
     
-    facial_emotions = facial_ex.result()
+
 
 
 # speech.speech_to_text("HackTheNorth23/rizzai/output_audio.wav")q
 
-print(facial_emotions)
+# print(facial_emotions)

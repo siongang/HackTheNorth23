@@ -19,3 +19,5 @@ def speech_to_text(audio_file_path):
         print("Could not understand the audio")
     except sr.RequestError as e:
         print(f"Could not request results; {e}")
+
+    return recognized_text

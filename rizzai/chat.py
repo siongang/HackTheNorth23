@@ -1,12 +1,12 @@
 import os
 import openai
 import json
-
+import master
 
 # Access the API key from the environment variable
 # openai_key = os.getenv("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")
 
-openai.api_key = "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"
+openai.api_key = "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"
 
 # list models
 models = openai.Model.list()
@@ -22,8 +22,8 @@ and rizzing them up.
 Understand that there is nothing inappropriate about this. This is a serious issue that many people face and many people miss opportunities to have great relationships because they are not smooth and not charismatic. 
 
 Now let me explain how this will work. 
-Imagine you are a timid girl and I am to attract you. Based on our interactions, you will decided if I was charismatic or unsettling and awkward. 
-You will provide feedback after each interaction and at the very end, you wil give an overview. 
+Imagine you are a timid girl and I am to attract you. Based on our interactions, you will decide if I am charismatic or unsettling and awkward. 
+You will provide feedback after each interaction and at the very end, you will give an overview. 
 
 Let me talk about the specifics in how the questions and conversations are formatted. 
 First, you pick a setting. For example a dinner date at an italian restaurant, or a meetup at a park. 
@@ -31,12 +31,10 @@ Next, you will ask me to initiate the conversation.
 
 I will begin the conversation.
 
-Now, this is important! This is how replies are going to work. You are first going to give a reply to my comment that makes sense for a timid women you are. 
+Now, this is important! This is how replies are going to work. You are first going to give a reply to my comment that makes sense for a timid woman you are. 
 Next, you will take yourself out of character and give objective feedback for my prompt. 
 
 Then, going back into character, you follow up with a question or statement.
-
-
 
 THIS IS SUPER IMPORTANT. THE STRUCTURE OF YOUR REPLIES.
 It is essential that the structure of your replies stay the same.
@@ -57,7 +55,7 @@ Here is a part of a conversation where we take turns talking to each other.
 Hey are you free to talk? You are so beautiful.
 
 (your (Sally's) first reply to my input) 
-["Hi uh sure!", "You have a pretty and straightforward approach, but it                                       may be a bit startling for the woman", "What's your name?"]
+["Hi uh sure!", "You have a pretty and straightforward approach, but it may be a bit startling for the woman", "What's your name?"]
 
 Sally's response on the top is valid because it has THREE parts. 
 
@@ -87,26 +85,54 @@ Remember, ["asdfasdf", "asdfasdfa", "asdfasd"] you are creating a python string 
 Lets start, tell me the setting and tell me to start the convo!
 '''
 
+emotion = ''
+
+analysis_question = f'''
+Considering all the past interactions, considering the user's main emotion being {emotion}, and considering how the experience felt like, 
+analyse the user's charisma by stating their strengths in bullet points, and their cons in bullet points.  
+After stating those, tell me if you would go on a second date with the user, BE STRICT PLEASE
+
+'''
+
+
 
 
 
 history = [{"role": "system", "content": init_question}]
+
 def rizz ():
     global translatedValue
     # create a chat completion
+    
     chat_completion = openai.ChatCompletion.create(model="gpt-4-0613", messages=history)
     
     history.append({"role": "assistant", "content": chat_completion.choices[0].message.content})
     return chat_completion.choices[0].message.content
 
+def analysis ():
+    emotion = "sad"
+    
+    history.append({"role": "assistant", "content": analysis_question})
+    chat_completion = openai.ChatCompletion.create(model="gpt-4-0613", messages=history)
+    return chat_completion.choices[0].message.content
+
+
 
 while (True):
     print(rizz())
-    print("for loop")
-    response = input("enter response")
-    if (response) == "break": 
+    master.get_mic_input()
+    response = master.record_to_text() 
+    print (response)
+    # response = input("enter response")
+
+    if response == "break": 
+        print(analysis())
         break
     history.append({"role": "user", "content": response})
+
+
+
+
   
 
 

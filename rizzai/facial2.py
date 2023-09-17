@@ -26,6 +26,7 @@ def gen_frames():
         if not success or quit_flag:
             break
 
+
         # apply model to frame
         gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
@@ -59,7 +60,7 @@ def gen_frames():
             cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
             cv2.putText(frame, emotion, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
 
-
+     
         ret, buffer = cv2.imencode('.jpg', frame)
         frame = buffer.tobytes()
         yield (b'--frame\r\n'
@@ -81,15 +82,9 @@ def quit_facial():
     quit_flag = True
     return "Video terminated."
 
-@app.route('/')
-def live_stream():
-    live_url = 'http://localhost:5000/live_video'
-    return render_template('video_player.html', url=live_url)
-
 
 def get_emotion_list():
     return emotion_list
 
 if __name__ == "__main__":
     app.run(debug=True)
-    print(get_emotion_list())
