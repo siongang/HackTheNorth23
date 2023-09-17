@@ -126,26 +126,80 @@ def rizz ():
     pygame.mixer.stop()
 
     return assistant_reply
+
+
+final_strengths = ''
+final_weaknesses = ''
+final_predictions = ''
+highest_emotion = ''
+all_emotions = ''
+
+
+
 def analysis ():
+    global final_strengths
+    global final_weaknesses
+    global final_predictions
+    global highest_emotion
+    global all_emotions
+
     from facial2 import emotion_list
-    emotion = max(emotion_list.keys(), key=emotion_list.get)
-    print(emotion)
+    all_emotions = emotion_list
+    highest_emotion= max(emotion_list.keys(), key=emotion_list.get)
+    print(all_emotions)
+
+
+    import matplotlib.pyplot as plt
+    # Extract emotion labels and values
+    emotions = list(all_emotions.keys())
+    values = list(all_emotions.values())
+
+    # Create a pie chart
+    plt.figure(figsize=(6, 6))
+    plt.pie(values, labels=emotions, startangle=140)
+    plt.title('Emotion Distribution')
+    plt.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+
+    # Save the pie chart as an image file (e.g., PNG)
+    plt.savefig('rizzai/static/images/emotion_pie_chart')
+
+ 
+
+    history.append({"role": "system", "content": f"Based on some evaluations, the user was feeling {highest_emotion} for most of the time. take it as a grain of salt as the investigation is not very robust, but it can positively affect your valuation."})
+    chat_completion = openai.ChatCompletion.create(model="gpt-4-0613", messages=history)
+
     analysis_question = f'''
-    Considering all the past interactions, considering the user's main emotion being {emotion}, and considering how the experience felt like, 
-    analyse the user's charisma by stating their strengths in bullet points, and their cons in bullet points.  
-    After stating those, tell me if you would go on a second date with the user, BE STRICT PLEASE
-    '''
+    Considering the previous interations that we had, state one point that I did well on in terms of
+    charisma and attractivness (less than 70 words):'''
     history.append({"role": "assistant", "content": analysis_question})
     chat_completion = openai.ChatCompletion.create(model="gpt-4-0613", messages=history)
-    return chat_completion.choices[0].message.content
+    final_strengths = chat_completion.choices[0].message.content
+
+
+
+
+
+    analysis_question1 = f'''
+    Considering the short previous interactions that we had, state one weakness in terms of charisma and attractivness (less than 70 words):'''
+    history.append({"role": "assistant", "content": analysis_question1})
+    chat_completion = openai.ChatCompletion.create(model="gpt-4-0613", messages=history)
+    final_weaknesses = chat_completion.choices[0].message.content
+
+    analysis_question2 = f'''
+    In a sentence, would you like to go on a second date with me or no? (less than 25 words)'''
+    history.append({"role": "assistant", "content": analysis_question2})
+    chat_completion = openai.ChatCompletion.create(model="gpt-4-0613", messages=history)
+    final_predictions = chat_completion.choices[0].message.content
+
 
 
 # import master
 import master
 
 # main function
-# analysis question is here because of the parameter emotionq
+# analysis question is here because of the parameter emotion
 def main ():
+    global history
     history = [{"role": "system", "content": init_question}]
     while (True):
         print(rizz())
@@ -154,10 +208,17 @@ def main ():
         print (response)
         # response = input("enter response")
 
-        # if response == "break": 
-        #     print(analysis())
-        #     break
+        # exit the chat gpt
+        if response == "break": 
+            analysis()
+            break
         history.append({"role": "user", "content": response})
+
+
+def reset():
+    global history
+    history = [{"role": "system", "content": init_question}]
+
 
 
 

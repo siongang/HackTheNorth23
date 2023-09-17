@@ -1,64 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>About RizzBot | RizzBot</title>
-  <link href="{{ url_for('static', filename='static/style.css') }}" rel="stylesheet" type="text/css" />
-</head>
-
-<body>
+  <title>About | doubleURizz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Rowdies:wght@300&display=swap" rel="stylesheet">
   <style>
-    html {
-    height: 100%;
-    width: 100%;
-    font-family: sans-serif;
-    text-align: center;
-    }
-
     body {
+      font-family: 'Poppins', sans-serif;
       background-color: #ffedf2;
-    }
-
-    h1 {
-      color: #421a1a;
-      font-family: 'Rowdies', cursive;
-      font-size: 100px;
-      margin: 10px;
     }
 
     h2 {
       color: #411a1a;
-      font: sans-serif;
+      font: 'Poppins', sans-serif;
       font-size: 30px;
-      margin: 25px;
-    }
-
-    p {
-      font-size: 20px;
       padding-top: 50px;
-      padding-left: 300px;
-      padding-right: 300px;
-    }
-
-    button {
-      font: sans-serif;
-      font-size: 15px;
-      background-color: #ffcccc;
-      border-color: #996666;
-      border-radius: 15px;
-    }
-
-    ul {
-      list-style-type: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    li {
-      display: inline;
-      float: left;
     }
 
     a {
@@ -68,94 +28,58 @@
       color: #421a1a;
     }
 
+    .nav-bar {
+      list-style: none;
+      height: 40px;
+    }
+
+    .nav-element {
+      display: inline;
+      float: left;
+    }
+
     .active {
       color: #cc9999;
     }
-
-    .home-pg {
-      padding-top: 220px;
-    }
-
-    .cam-container {
-      height: 80%;
-      width: 80%;
-      padding: 50px;
-      padding-top: 25px;
-      margin: 0;
+    
+    .about-pg {
+      height: 100vh;
       text-align: center;
     }
 
-    .analysis-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      gap: 10px;
-    }
-
-    .analysis-section {
-      flex: 1;
-      max-width: 400px;
-      padding: 20px;
-      text-align: left;
-    }
-
-    .analysis-section-title {
-      font-size: 30px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    .analysis-points {
-      list-style: disc;
-      padding: 0;
-      margin: 0;
-    }
-
-    .start-btn {
-      width: 150px;
-      height: 60px;
-    }
-
-    .start-btn:hover {
-      background-color: #eba9bf;
-    }
-
-    .next-btn {
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      width: 175px;
-      height: 40px;
-      border-color: #996666;
-    }
-
-    .next-btn:hover {
-      background-color: #eba9bf;
-    }
-
-    .restart-btn {
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      width: 100px;
-      height: 40px;
-      border-color: #996666;
-    }
-
-    .restart-btn:hover {
-      background-color: #eba9bf;
+    .about-text {
+      font-size: 20px;
+      padding: 10px 25vh 40px 25vh;
+      text-align: justify;
     }
   </style>
+</head>
+
+
+<body>
+  <!-- navigation bar --> 
   <div>
-    <ul>
-      <li><a href="/">home</a></li>
-      <li><a href="about.html" class="active">about</a></li>
+    <ul class="nav-bar">
+      <li><a href="index.html" class="nav-element">home</a></li>
+      <li><a href="about.html" class="active nav-element">about</a></li>
     </ul>
   </div>
 
-  <div style="padding-top: 70px;">
-    <h2>Welcome to RizzBot!</h2>
-    <p>In a world where a multitude of factors are taken into consideration, being viewed as attractive (or, as the youngins say, "W rizz") is no simple feat. However, with doubleURizz, be prepared to amaze everyone with your W rizz. By utilizing OpenCV  </p>
+  <!-- about page -->
+  <div class="about-pg">
+    
+    <div>
+      <h2>Welcome to <b>doubleURizz!</b></h2>
+    </div>
+
+    <div class="about-text">
+      <p>In a world where a multitude of factors are taken into consideration, being viewed as attractive (or as the youngins say, "W rizz") is no simple feat. However, with doubleURizz, be prepared to amaze everyone with your "W rizz". By utilizing OpenCV, DeepFace, and speech analysis technology, our charisma trainer will help you along your journey to becoming a "rizz" master. Through dating simulations and real-time feedback, you can always trust doubleURizz to have your back when it comes to navigating the tumultuous world of romance.</p>
+      <br>
+      <p style="font-weight: 900"><u>How to use doubleURizz:</u></p>
+      <p>Sally, our charisma trainer, will automatically guide you through each dating simulation. It is important to remember to <b style="color: #996666">speak clearly and press "Q"</b> on your keyboard every time you finish speaking.</p>
+    </div>
+
   </div>
 </body>
+
+</html>

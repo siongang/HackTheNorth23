@@ -33,13 +33,20 @@ def about():
     """
     return render_template('about.html')
 
+
+import chat
 # analysis page
 @app.route('/analysis.html')
 def analysis():
     """
     Render the analysis page.
     """
-    return render_template('analysis.html')
+    chat.reset()
+    chat.analysis()
+    image_url = 'static/images/emotion_pie_chart.png'
+    return render_template('analysis.html', strength_points=chat.final_strengths, 
+                           weakness_points = chat.final_weaknesses, prediction = chat.final_predictions,
+                             image_url = image_url)
 
 @app.route('/quit')
 def quit_facial() -> str:
