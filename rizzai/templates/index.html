@@ -5,13 +5,151 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>Home | RizzBot</title>
-  <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" type="text/css" />
+  <link href="{{ url_for('static', filename='static/style.css') }}" rel="stylesheet" type="text/css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rowdies:wght@300&display=swap" rel="stylesheet">
 </head>
 
 <body>
+  <style>
+    html {
+    height: 100%;
+    width: 100%;
+    font-family: sans-serif;
+    text-align: center;
+    }
+
+    body {
+      background-color: #ffedf2;
+    }
+
+    h1 {
+      color: #421a1a;
+      font-family: 'Rowdies', cursive;
+      font-size: 100px;
+      margin: 10px;
+    }
+
+    h2 {
+      color: #411a1a;
+      font: sans-serif;
+      font-size: 30px;
+      margin: 25px;
+    }
+
+    p {
+      font-size: 20px;
+      padding-top: 50px;
+      padding-left: 300px;
+      padding-right: 300px;
+    }
+
+    button {
+      font: sans-serif;
+      font-size: 15px;
+      background-color: #ffcccc;
+      border-color: #996666;
+      border-radius: 15px;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      display: inline;
+      float: left;
+    }
+
+    a {
+      display: block;
+      padding: 15px;
+      text-decoration: none;
+      color: #421a1a;
+    }
+
+    .active {
+      color: #cc9999;
+    }
+
+    .home-pg {
+      padding-top: 220px;
+    }
+
+    .cam-container {
+      height: 80%;
+      width: 80%;
+      padding: 50px;
+      padding-top: 25px;
+      margin: 0;
+      text-align: center;
+    }
+
+    .analysis-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      gap: 10px;
+    }
+
+    .analysis-section {
+      flex: 1;
+      max-width: 400px;
+      padding: 20px;
+      text-align: left;
+    }
+
+    .analysis-section-title {
+      font-size: 30px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .analysis-points {
+      list-style: disc;
+      padding: 0;
+      margin: 0;
+    }
+
+    .start-btn {
+      width: 150px;
+      height: 60px;
+    }
+
+    .start-btn:hover {
+      background-color: #eba9bf;
+    }
+
+    .next-btn {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      width: 175px;
+      height: 40px;
+      border-color: #996666;
+    }
+
+    .next-btn:hover {
+      background-color: #eba9bf;
+    }
+
+    .restart-btn {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      width: 100px;
+      height: 40px;
+      border-color: #996666;
+    }
+
+    .restart-btn:hover {
+      background-color: #eba9bf;
+    }
+  </style>
   <!-- Starting Page --> 
   <div>
     <ul>
@@ -31,8 +169,8 @@
     </div>
     
     <div>
-      <button type="button" class="start-btn" onclick="window.location.href = 'video_player.html';">START SESSION</button>
-    </div>
+      <button  class="start-btn" onclick="window.location.href = 'video_player.html';">START SESSION</button>
+    </div> <!--type="button"-->
     
     <div>
       <h2>double your rizz with a personal charisma trainer</h2>

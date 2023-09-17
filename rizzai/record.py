@@ -49,4 +49,3 @@ def record():
     print(f"Audio saved as {OUTPUT_FILENAME}")
 
 
-record()

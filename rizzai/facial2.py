@@ -2,8 +2,9 @@
 from flask import Flask, render_template, Response
 from deepface import DeepFace
 import cv2
-#Initialize the Flask app
-app = Flask(__name__)
+import threading
+import time
+import chat
 opencv_processing = False  # whether the model is active or not.
 
 # Load the pre-trained emotion detection model
@@ -22,6 +23,10 @@ emotion_list = {}
 quit_flag = False
 
 def gen_frames() -> None:
+    thread = threading.Thread(target=chat.main)
+    thread.start()
+
+    
     """
     Run the camera. Make predictions using the DeepFace model.
     """ 
@@ -68,43 +73,9 @@ def gen_frames() -> None:
         frame = buffer.tobytes()
         yield (b'--frame\r\n'
                 b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
+        
 
 
-@app.route('/')
-def index() -> str:
-    return render_template('index.html')
-
-# streaming
-@app.route('/video_feed')
-def video_feed() -> Response:
-    """
-    Render the video feed from facial.
-    """
-    return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
-
-# video_player page
-@app.route('/video_player.html')
-def video_player():
-    """
-    Render video_player.
-    """
-    return render_template('video_player.html')
-
-@app.route('/quit')
-def quit_facial() -> str:
-    """
-    Quit the facial scanner.
-    """
-    global quit_flag  # have to make global so it changes outside of function
-    quit_flag = True
-    return "Video terminated."
 
 
-def get_emotion_list() -> dict:
-    """
-    Returns current emotion_list.
-    """
-    return emotion_list
 
-if __name__ == "__main__":
-    app.run()

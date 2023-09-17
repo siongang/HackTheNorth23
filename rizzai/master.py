@@ -1,7 +1,5 @@
 import record
 import speech
-import facial2
-import concurrent.futures
 
 
 facial_emotions = []
@@ -18,12 +16,8 @@ facial_emotions = []
 # user_answer()
 
 
-
 def get_mic_input():
     record.record()
-
-
-
 
 # recorded speech to text
 def record_to_text():
@@ -32,7 +26,5 @@ def record_to_text():
 
 # get_mic_input()
 # print(record_to_text)
-
 # speech.speech_to_text("HaqckTheNorth23/rizzai/output_audio.wav")q
-
 # print(facial_emotions)

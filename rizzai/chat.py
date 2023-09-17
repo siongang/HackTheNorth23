@@ -2,6 +2,9 @@ import os
 import openai
 import json
 from dotenv import load_dotenv
+from gtts import gTTS
+import os
+import pygame
 
 # Load environment variables from the .env file
 load_dotenv()
@@ -91,56 +94,70 @@ Remember, ["asdfasdf", "asdfasdfa", "asdfasd"] you are creating a python string 
 Lets start, tell me the setting and tell me to start the convo!
 '''
 
-emotion = ''
-
-analysis_question = f'''
-Considering all the past interactions, considering the user's main emotion being {emotion}, and considering how the experience felt like, 
-analyse the user's charisma by stating their strengths in bullet points, and their cons in bullet points.  
-After stating those, tell me if you would go on a second date with the user, BE STRICT PLEASE
-
-'''
+analysis_question = ''
+emotion =''
 
 
 history = [{"role": "system", "content": init_question}]
 
+
+from pydub import AudioSegment
 def rizz ():
     global translatedValue
     # create a chat completion
     
     chat_completion = openai.ChatCompletion.create(model="gpt-4-0613", messages=history)
-    
-    history.append({"role": "assistant", "content": chat_completion.choices[0].message.content})
-    return chat_completion.choices[0].message.content
+    assistant_reply = chat_completion.choices[0].message.content
+    history.append({"role": "assistant", "content": assistant_reply})
 
+    # Create a gTTS object
+    tts = gTTS(assistant_reply)
+    tts.save('assistant.mp3')
+    # Initialize pygame mixer
+    pygame.mixer.init()
+    # Create a Sound object from the saved audio file
+    sound = pygame.mixer.Sound("assistant.mp3")
+    # Play the audio
+    sound.play()
+    # Wait for the audio to finish
+    while pygame.mixer.get_busy():
+        pygame.time.Clock().tick(10)
+    # Stop the player
+    pygame.mixer.stop()
+
+    return assistant_reply
 def analysis ():
-    emotion = "sad"
+    from facial2 import emotion_list
+    emotion = max(emotion_list.keys(), key=emotion_list.get)
+    print(emotion)
+    analysis_question = f'''
+    Considering all the past interactions, considering the user's main emotion being {emotion}, and considering how the experience felt like, 
+    analyse the user's charisma by stating their strengths in bullet points, and their cons in bullet points.  
+    After stating those, tell me if you would go on a second date with the user, BE STRICT PLEASE
+    '''
     history.append({"role": "assistant", "content": analysis_question})
     chat_completion = openai.ChatCompletion.create(model="gpt-4-0613", messages=history)
     return chat_completion.choices[0].message.content
 
-print("at the master")
+
+# import master
 import master
 
+# main function
+# analysis question is here because of the parameter emotionq
+def main ():
+    history = [{"role": "system", "content": init_question}]
+    while (True):
+        print(rizz())
+        master.get_mic_input()
+        response = master.record_to_text() 
+        print (response)
+        # response = input("enter response")
 
-while (True):
-    print(rizz())
-    print("RIEZZ")
-
-
-    master.get_mic_input()
-    response = master.record_to_text() 
-    print (response)
-    # response = input("enter response")
-
-    if response == "break": 
-        print(analysis())
-        break
-    history.append({"role": "user", "content": response})
-
-
+        # if response == "break": 
+        #     print(analysis())
+        #     break
+        history.append({"role": "user", "content": response})
 
 
-  
 
-
- 
