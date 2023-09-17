@@ -4,6 +4,7 @@ from deepface import DeepFace
 import cv2
 #Initialize the Flask app
 app = Flask(__name__)
+opencv_processing = False  # whether the model is active or not.
 
 # Load the pre-trained emotion detection model
 model = DeepFace.build_model("Emotion")
@@ -76,22 +77,32 @@ def index() -> str:
 # streaming
 @app.route('/video_feed')
 def video_feed() -> Response:
+    """
+    Render the video feed from facial.
+    """
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 # video_player page
 @app.route('/video_player.html')
 def video_player():
+    """
+    Render video_player.
+    """
     return render_template('video_player.html')
 
-@app.route('/')
+@app.route('/quit')
 def quit_facial() -> str:
+    """
+    Quit the facial scanner.
+    """
     global quit_flag  # have to make global so it changes outside of function
     quit_flag = True
     return "Video terminated."
 
+
 def get_emotion_list() -> dict:
     """
-    Returns current emotion_list 
+    Returns current emotion_list.
     """
     return emotion_list
 

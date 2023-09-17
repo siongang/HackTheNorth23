@@ -4,20 +4,42 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>replit</title>
+  <title>Home | RizzBot</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rowdies:wght@300&display=swap" rel="stylesheet">
 </head>
 
 <body>
-
-
-  <div class="session">
-    <button class="next_btn" id="next_btn_id" onclick="window.location.href = 'analysis.html';">Finish Session</button>
+  <!-- Starting Page --> 
+  <div>
+    <ul>
+      <li><a href="index.html" class="active">home</a></li>
+      <li><a href="about.html">about</a></li>
+    </ul>
   </div>
 
 
-  <!--Run video feed-->
-  <img id="video-feed" src="{{url_for('video_feed')}}" alt="Live Video Feed">
+
+
+  
+  <div class="start-pg">
+    
+    <div> 
+    <h1>doubleURizz</h1>
+    </div>
+    
+    <div>
+      <button type="button" class="start-btn" onclick="window.location.href = 'video_player.html';">START SESSION</button>
+    </div>
+    
+    <div>
+      <h2>double your rizz with a personal charisma trainer</h2>
+    </div>
+    
+  </div>
+    
 </body>
 
 </html>
