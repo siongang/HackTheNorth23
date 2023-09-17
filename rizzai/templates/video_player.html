@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interaction | RizzBot</title>
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <img id="video-stream" src="{{ url_for('video_feed') }}" alt="Video Stream">
+    <button id="startButton">Start Video</button>
+    <button id="stopButton">Stop Video</button>
+
+    <script>
+        const videoStream = document.getElementById('video-stream');
+        const startButton = document.getElementById('startButton');
+        const stopButton = document.getElementById('stopButton');
+
+        startButton.addEventListener('click', () => {
+            // Send an AJAX request to start processing
+            fetch('/start_processing', { method: 'POST' })
+                .then(response => response.text())
+                .then(data => console.log(data))
+                .catch(error => console.error(error));
+        });
+
+        stopButton.addEventListener('click', () => {
+            // Send an AJAX request to stop processing
+            fetch('/stop_processing', { method: 'POST' })
+                .then(response => response.text())
+                .then(data => console.log(data))
+                .catch(error => console.error(error));
+        });
+    </script>
+    <div>
+        <button class="next-btn" onclick="window.location.href = 'analysis.html';">END SESSION</button>
+    </div>
+</body>
+</html>
