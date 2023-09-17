@@ -107,5 +107,5 @@ def get_emotion_list() -> dict:
     return emotion_list
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
     print(get_emotion_list())
