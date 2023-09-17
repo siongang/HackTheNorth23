@@ -4,6 +4,9 @@ import facial2
 #Initialize the Flask app
 app = Flask(__name__)
 
+
+
+
 @app.route('/')
 @app.route('/index.html')
 def index() -> str:
@@ -57,5 +60,5 @@ def quit_facial() -> str:
     quit_flag = True
     return "Video terminated."
 
-if __name__ == "__main__":
-    app.run()
+if __name__ == '__main__':
+    app.run(host='127.0.0.1', port=5000)
